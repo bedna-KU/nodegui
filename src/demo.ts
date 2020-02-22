@@ -1,33 +1,18 @@
-import { QTableView } from './lib/QtWidgets/QTableView';
-import { QWidget } from './lib/QtWidgets/QWidget';
-import { FlexLayout } from './lib/core/FlexLayout';
-import { QTableWidget } from './lib/QtWidgets/QTableWidget';
+import { QMainWindow, WidgetEventTypes, QPushButton, QApplication } from './index';
 
-const widget = new QWidget();
-const layout = new FlexLayout();
-const view = new QTableView();
-const table = new QTableWidget(5, 5);
+const win = new QMainWindow();
+win.addEventListener(WidgetEventTypes.WindowStateChange, () => {
+    console.log('Window state change');
+});
+const btn = new QPushButton();
+btn.setText('Quit');
+btn.addEventListener('clicked', () => {
+    QApplication.instance().exit(1);
+});
+win.setCentralWidget(btn);
+win.show();
+(global as any).win = win;
 
-view.setStyleSheet(`
-QTableView {
-    min-width:300px;
-    min-height:200px;
-}
-`);
-
-table.setStyleSheet(`
-QTableView {
-    min-width:300px;
-    min-height:200px;
-}
-`);
-
-widget.setLayout(layout);
-layout.addWidget(view);
-layout.addWidget(table);
-
-widget.setInlineStyle('flex:1;');
-widget.resize(600, 400);
-widget.show();
-
-(global as any).main = widget;
+setInterval(() => {
+    console.log('asdasd');
+}, 1000);
