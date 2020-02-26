@@ -170,6 +170,18 @@ target_include_directories(${CORE_WIDGETS_ADDON} PRIVATE
     "${PROJECT_SOURCE_DIR}/src/cpp/include/nodegui"
 )
 
+
+if (WIN32) 
+    target_compile_definitions(${CORE_WIDGETS_ADDON} PRIVATE
+        ENABLE_DLL_EXPORT=1
+    )
+    target_link_libraries(${CORE_WIDGETS_ADDON} PRIVATE 
+        "${PROJECT_SOURCE_DIR}/node_modules/@nodegui/qode/binaries/qode.lib"      
+    )
+    target_compile_options(${CORE_WIDGETS_ADDON} PRIVATE "/MP4")
+
+endif()
+
 target_link_libraries(${CORE_WIDGETS_ADDON} PRIVATE
     "${CMAKE_JS_LIB}"
     Qt5::Widgets
@@ -177,11 +189,3 @@ target_link_libraries(${CORE_WIDGETS_ADDON} PRIVATE
     Qt5::Gui
 )
 
-
-if (WIN32) 
-    target_compile_definitions(${CORE_WIDGETS_ADDON} PRIVATE
-        ENABLE_DLL_EXPORT=1
-    )
-    target_compile_options(${CORE_WIDGETS_ADDON} PRIVATE "/MP4")
-
-endif()
